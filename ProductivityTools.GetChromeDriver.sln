@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30002.166
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductivityTools.GetChromeDriver", "ProductivityTools.GetChromeDriver\ProductivityTools.GetChromeDriver.csproj", "{8CB6ED92-EDC9-407C-8E6C-2A7BB8C4A969}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8CB6ED92-EDC9-407C-8E6C-2A7BB8C4A969}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CB6ED92-EDC9-407C-8E6C-2A7BB8C4A969}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CB6ED92-EDC9-407C-8E6C-2A7BB8C4A969}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CB6ED92-EDC9-407C-8E6C-2A7BB8C4A969}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0CA1B4A3-D04A-43EC-9AC9-77BD170243D9}
+	EndGlobalSection
+EndGlobal
