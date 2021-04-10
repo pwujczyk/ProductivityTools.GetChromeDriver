@@ -13,54 +13,63 @@ namespace ProductivityTools.GetChromeDriver
         private const string ChromeDriverName = "chromedriver_win32.zip";
         private const string ChromeDriverExeName = "chromedriver.exe";
         
-
-        // static readonly HttpClient client = new HttpClient();
-
         public static void DownloadLatestVersion()
         {
             try
             {
-                HttpClient client = new HttpClient();
-                var response = client.GetStringAsync(ChromeDriverUrl).Result;
-
-                //https://chromedriver.storage.googleapis.com/index.html?path=89.0.4389.23/" 
-                //path=89.0.4389.23/" 
-                // string pattern = @"^(http|https|ftp|)\://|[a-zA-Z0-9\-\.]+\.[a-zA-Z](:[a-zA-Z0-9]*)?/?([a-zA-Z0-9\-\._\?\,\'/\\\+&amp;%\$#\=~])*[^\.\,\)\(\s]$";
-                string pattern = @"\b(https://chromedriver.storage.googleapis.com/index.html)\S+\b";
-                Regex reg = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-                var match= reg.Match(response);
-                var latestStableVersionLink=match.Value+"/";
-
-                //var directoryListing = client.GetAsync(latestStableVersionLink).Result;
-
-                pattern = @"\b((\d+).(\d+).(\d+).(\d+))\b";
-
-                reg = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-                match = reg.Match(latestStableVersionLink);
-                var version = match.Value;
+                string version = GetLatestChromeDriverVersion();
                 var windowsDownladLink = $"https://chromedriver.storage.googleapis.com/{version}/chromedriver_win32.zip";
 
-                if (File.Exists(ChromeDriverName))
-                {
-                    File.Delete(ChromeDriverName);
-                }
+                RemoveFileIfExists(ChromeDriverName);
+                RemoveFileIfExists(ChromeDriverExeName);
 
-                if (File.Exists(ChromeDriverExeName))
-                {
-                    File.Delete(ChromeDriverExeName);
-                }
-
-                using (var webclient = new WebClient())
-                {
-                    webclient.DownloadFile(windowsDownladLink, "chromedriver_win32.zip");
-                }
-              
-                ZipFile.ExtractToDirectory("chromedriver_win32.zip", ".");
+                DowlnoadChromeZip(windowsDownladLink);
+                ExtractZip();
             }
             catch (Exception ex)
             {
+                throw ex;
+            }
+        }
 
-                throw;
+        private static string GetLatestChromeDriverVersion()
+        {
+            HttpClient client = new HttpClient();
+            var response = client.GetStringAsync(ChromeDriverUrl).Result;
+
+            //https://chromedriver.storage.googleapis.com/index.html?path=89.0.4389.23/" 
+            string pattern = @"\b(https://chromedriver.storage.googleapis.com/index.html)\S+\b";
+            Regex reg = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            var match = reg.Match(response);
+            var latestStableVersionLink = match.Value;
+
+
+            pattern = @"\b((\d+).(\d+).(\d+).(\d+))\b";
+            reg = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            match = reg.Match(latestStableVersionLink);
+            var version = match.Value;
+            return version;
+        }
+
+        private static void ExtractZip()
+        {
+            ZipFile.ExtractToDirectory(ChromeDriverName, ".");
+        }
+
+        private static void DowlnoadChromeZip(string windowsDownladLink)
+        {
+            using (var webclient = new WebClient())
+            {
+                webclient.DownloadFile(windowsDownladLink, ChromeDriverName);
+            }
+        }
+
+        private static void RemoveFileIfExists(string fileName)
+        {
+
+            if (File.Exists(fileName))
+            {
+                File.Delete(fileName);
             }
         }
     }
